@@ -1,0 +1,12 @@
+<div *ngFor="let book of books">
+  <div class="card">
+    <div class="card-header">
+      {{book.name}}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{book.name}}</h5>
+      <p class="card-text">{{book.description}}</p>
+      <p class="card-text">{{book.price}}</p>
+    </div>
+  </div>
+</div>
