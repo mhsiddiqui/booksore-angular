@@ -9,22 +9,33 @@ class BookType(DjangoObjectType):
         model = Book
 
 
-class UserType(DjangoObjectType):
-    class Meta:
-        model = get_user_model()
+class CreateBook(graphene.Mutation):
+    id = graphene.Int()
+    title = graphene.String()
+    description = graphene.String()
+    author = graphene.String()
+    price = graphene.Float()
+
+    class Arguments:
+        id = graphene.Int()
+        title = graphene.String()
+        description = graphene.String()
+        author = graphene.String()
+        price = graphene.Float()
+
+    def mutate(self, info, title, description, author, price):
+        return Book.objects.create(
+            title=title, description=description, author=author, price=price
+        )
 
 
-class BookQuery(object):
+class Mutation(graphene.ObjectType):
+    create_book = CreateBook.Field()
+
+
+class Query(object):
     book = graphene.Field(BookType, id=graphene.Int(), name=graphene.String())
-    title = graphene.Field(BookType, id=graphene.String(), name=graphene.String())
-    user = graphene.List(UserType)
     books = graphene.List(BookType)
-
-    # def resolve_title(self, info, **kwargs):
-    #     return
-    #
-    # def resolve_user(self, info, **kwargs):
-    #     return get_user_model().objects.all()
 
     def resolve_book(self, info, **kwargs):
         id = kwargs.get('id')
