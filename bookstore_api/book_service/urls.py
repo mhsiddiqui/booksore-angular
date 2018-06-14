@@ -1,0 +1,7 @@
+from django.conf.urls import url
+from django.contrib import admin
+from views import BookView
+
+urlpatterns = [
+    url(r'^book/', BookView.as_view()),
+]
