@@ -10,6 +10,8 @@ import { BookService } from '../../service/book/book.service'
 export class BookListComponent implements OnInit {
 
   books: GridBook[];
+  next: string = "";
+  previous: string = "";
 
   constructor(private bookService: BookService) { }
 
@@ -20,8 +22,23 @@ export class BookListComponent implements OnInit {
   getBooks(): void {
     let self = this;
     self.bookService.getBooks().then(function (response) {
-      self.books = response;
+      self.next = response.next;
+      self.previous = response.previous;
+      self.books = response.results;
     })
+  }
+
+  getBooksByUrl(url): void {
+    let self = this;
+    self.bookService.getBooksByUrl(url).then(function (response) {
+      self.next = response.next;
+      self.previous = response.previous;
+      self.books = response.results;
+    })
+  }
+
+  method(event): void {
+    console.log(event);
   }
 
 }

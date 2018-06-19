@@ -15,10 +15,27 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.views.decorators.csrf import csrf_exempt
+from schema import AllSchemas
 from graphene_django.views import GraphQLView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^graphql', GraphQLView.as_view(graphiql=True)),
-    url(r'^book_service/', include('book_service.urls', namespace='book-service')),
+
+    url(r'^auth_service/gql', csrf_exempt(GraphQLView.as_view(
+        graphiql=True, schema=AllSchemas.auth_service))),
+
+    url(r'^book_service/gql', csrf_exempt(GraphQLView.as_view(
+        graphiql=True, schema=AllSchemas.book_service))),
+
+    url(r'^user_service/gql', csrf_exempt(GraphQLView.as_view(
+        graphiql=True, schema=AllSchemas.user_service))),
+
+    # url(r'^auth_service/', include('auth_service.urls')),
+
+    url(r'^book_service/', include('book_service.urls')),
+
+    # url(r'^user_service/', include('user_service.urls')),
+
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

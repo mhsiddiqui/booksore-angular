@@ -1,7 +1,8 @@
 import graphene
+from graphql_jwt.decorators import login_required
+
 from models import Book
 from graphene_django.types import DjangoObjectType
-from django.contrib.auth import get_user_model
 
 
 class BookType(DjangoObjectType):
@@ -23,6 +24,7 @@ class CreateBook(graphene.Mutation):
         author = graphene.String()
         price = graphene.Float()
 
+    @login_required
     def mutate(self, info, title, description, author, price):
         return Book.objects.create(
             title=title, description=description, author=author, price=price
@@ -37,6 +39,7 @@ class Query(object):
     book = graphene.Field(BookType, id=graphene.Int(), name=graphene.String())
     books = graphene.List(BookType)
 
+    @login_required
     def resolve_book(self, info, **kwargs):
         id = kwargs.get('id')
 
@@ -45,5 +48,6 @@ class Query(object):
 
         return None
 
+    @login_required
     def resolve_books(self, info, **kwargs):
         return Book.objects.all().order_by('id')

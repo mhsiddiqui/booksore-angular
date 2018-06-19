@@ -8,7 +8,11 @@ import { GridBook } from '../../models/bookstore-models'
 export class BookService {
 
   getBooks(): any {
-    return this.api.call('get', '/books')
+    return this.getBooksByUrl('/book_service/book')
+  }
+
+  getBooksByUrl(url): any {
+    return this.api.call('get', url)
   }
 
   constructor(private api: ApiService) { }

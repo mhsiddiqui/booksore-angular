@@ -1,6 +1,8 @@
 export class GridBook {
-    id: string;
+    id: number;
     title: string;
     description: string;
     price: number;
+    author: string;
+    selected: boolean;
 }

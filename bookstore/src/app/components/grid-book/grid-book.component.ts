@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { GridBook } from '../../models/bookstore-models';
 
 @Component({
@@ -8,11 +8,19 @@ import { GridBook } from '../../models/bookstore-models';
 })
 export class GridBookComponent implements OnInit {
 
-  book: GridBook;
+  @Input() book: GridBook;
+  @Output() selected = new EventEmitter();
+  button_text = "Add to Cart";
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  addToCart(book: GridBook): void {
+    this.button_text = "Added";
+    this.book.selected = true;
+    this.selected.emit(book);
   }
 
 }

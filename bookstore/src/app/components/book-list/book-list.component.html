@@ -1,12 +1,14 @@
-<div *ngFor="let book of books">
-  <div class="card" [id]="'book-' + book.id">
-    <div class="card-header">
-      {{book.name}}
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">{{book.name}}</h5>
-      <p class="card-text">{{book.description}}</p>
-      <p class="card-text">{{book.price}}</p>
-    </div>
+<div class="row mt-2 d-flex justify-content-center">
+  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 m-1" 
+  *ngFor="let book of books">
+      <grid-book [book]="book" (selected)="method($event)"></grid-book>
   </div>
+</div>
+<div class="mt-2 d-flex justify-content-center">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><button class="page-link" (click)="getBooksByUrl(previous)" *ngIf="previous">Previous</button></li>
+      <li class="page-item"><button class="page-link" (click)="getBooksByUrl(next)" *ngIf="next">Next</button></li>
+    </ul>
+  </nav>
 </div>

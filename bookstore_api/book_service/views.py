@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from rest_framework import viewsets
+from models import Book
+from serializer import BookSerializer
 
-from django.shortcuts import render
-from django.views import View
 
-
-class BookView(View):
-    pass
+class BookView(viewsets.ModelViewSet):
+    queryset = Book.objects.all().order_by('title')
+    serializer_class = BookSerializer
+    permission_classes = []
+    authentication_classes = []

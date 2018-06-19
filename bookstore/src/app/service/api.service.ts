@@ -7,13 +7,15 @@ export class ApiService {
   private api: any;
 
   constructor(private http: HttpClient) {
-    this.api = 'http://127.0.0.1:2403';
+    this.api = 'http://127.0.0.1:8888';
   }
 
   public call(httpVerb, apiRoute, data = null, params: HttpParams = null, content_type= null) {
 
     httpVerb = httpVerb || '';
-      apiRoute = (this.api + apiRoute) || '';
+      if (!apiRoute.includes(this.api)){
+        apiRoute = (this.api + apiRoute) || '';
+      }
       data = data || {};
       const headers = new HttpHeaders();
 

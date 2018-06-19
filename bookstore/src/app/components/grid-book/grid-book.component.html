@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" [id]="'book-' + book.id">
   <div class="card-header">
     {{book.title}}
   </div>
@@ -6,5 +6,9 @@
     <h5 class="card-title">{{book.title}}</h5>
     <p class="card-text">{{book.description}}</p>
     <p class="card-text">{{book.price}}</p>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-primary" 
+    (click)="addToCart(book)" [disabled]="book.selected">{{ button_text }}</button>
   </div>
 </div>
